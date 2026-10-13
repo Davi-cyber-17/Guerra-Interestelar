@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#03060f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Guerra Interestelar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <div class="fx-grid"></div>
+  <div class="fx-planet p1"></div>
+  <div class="fx-planet p2"></div>
+  <div class="fx-scan"></div>
+
+  <!-- MENU PRINCIPAL -->
+  <section id="menu" class="screen active">
+    <div class="logo">
+      <div class="kicker">// SISTEMA DE DEFESA ESPACIAL</div>
+      <h1><span class="l1">Guerra</span><span class="l2">Interestelar</span></h1>
+      <div class="bar"></div>
+    </div>
+    <div class="btn-col">
+      <button id="btnLocal" class="btn primary"><span class="ico">▶</span> Modo Local</button>
+      <button id="btnOnline" class="btn gold"><span class="ico">◉</span> Modo Online</button>
+    </div>
+    <div class="panel info">
+      <div class="row-between"><span>RECORDE</span><b id="bestScore">0</b></div>
+    </div>
+    <p class="help" id="helpText"></p>
+  </section>
+
+  <!-- ONLINE -->
+  <section id="online" class="screen">
+    <h2 class="title">MODO ONLINE</h2>
+    <p class="sub">Jogue em dupla com qualquer dispositivo: PC, celular ou tablet.</p>
+    <div class="btn-col">
+      <button id="btnCreate" class="btn primary"><span class="ico">＋</span> Criar Sala</button>
+      <div class="or"><span>ou entre em uma sala</span></div>
+      <input id="roomInput" type="text" maxlength="5" placeholder="CÓDIGO" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" inputmode="text">
+      <button id="btnJoin" class="btn gold"><span class="ico">⇢</span> Entrar na Sala</button>
+      <button id="btnBackOnline" class="btn ghost">← Voltar</button>
+    </div>
+    <p id="onlineMsg" class="msg"></p>
+    <p class="hint">Os dois jogadores precisam abrir o mesmo endereço deste site.</p>
+  </section>
+
+  <!-- LOBBY -->
+  <section id="lobby" class="screen">
+    <h2 class="title">SALA</h2>
+    <div class="panel code-box">
+      <div class="code-label">CÓDIGO DA SALA</div>
+      <div id="lobbyCode" class="code">-----</div>
+      <div class="row">
+        <button id="btnCopyCode" class="btn small ghost">Copiar código</button>
+        <button id="btnCopyLink" class="btn small ghost">Copiar link</button>
+        <button id="btnShare" class="btn small ghost">Compartilhar</button>
+      </div>
+    </div>
+    <ul id="lobbyPlayers" class="players"></ul>
+    <p id="lobbyMsg" class="msg"></p>
+    <div class="btn-col">
+      <button id="btnStartOnline" class="btn primary" disabled><span class="ico">▶</span> Iniciar jogo</button>
+      <button id="btnLeaveLobby" class="btn ghost">← Sair da sala</button>
+    </div>
+  </section>
+
+  <!-- JOGO -->
+  <section id="stage" class="screen">
+    <aside id="sideL" class="side panel">
+      <h3>// SISTEMA</h3>
+      <div class="kv"><span>MODO</span><b id="sideMode">—</b></div>
+      <div class="kv"><span>SALA</span><b id="sideRoom">—</b></div>
+      <div class="kv"><span>REDE</span><b id="sidePing">—</b></div>
+      <h3>// ITENS</h3>
+      <div class="kv"><span>💰 Moeda</span><b>+5 pts</b></div>
+      <div class="kv"><span>⚡ Poder</span><b>+1 (máx 12)</b></div>
+      <div class="kv"><span>👑 Chefe</span><b>a cada 5 níveis</b></div>
+    </aside>
+
+    <div id="wrap">
+      <canvas id="game"></canvas>
+      <div class="topbtns">
+        <button id="btnSound" class="icon-btn" title="Som">🔊</button>
+        <button id="btnFull" class="icon-btn" title="Tela cheia">⛶</button>
+        <button id="btnExit" class="icon-btn" title="Sair">✕</button>
+      </div>
+      <div id="over" class="overlay">
+        <div class="over-box panel">
+          <h2>FIM DE JOGO</h2>
+          <div class="over-score"><span>SUA PONTUAÇÃO</span><b id="overScore">0</b></div>
+          <div class="over-best">RECORDE <b id="overBest">0</b></div>
+          <ul id="overTeam"></ul>
+          <button id="btnAgain" class="btn primary">↻ Jogar de novo</button>
+          <p id="overWait" class="msg"></p>
+          <button id="btnOverMenu" class="btn ghost">Menu</button>
+        </div>
+      </div>
+    </div>
+
+    <aside id="sideR" class="side panel">
+      <h3>// CONTROLES</h3>
+      <div class="kv"><span>🖱 Mouse</span><b>mover a nave</b></div>
+      <div class="kv"><span>⌨ Teclado</span><b>WASD / setas</b></div>
+      <div class="kv"><span>👆 Toque</span><b>arrastar</b></div>
+      <div class="kv"><span>🔫 Tiro</span><b>automático</b></div>
+      <h3>// DICA</h3>
+      <p class="tip">Pegue ⚡ para atirar mais balas de uma vez. Ao perder uma vida, o poder cai.</p>
+    </aside>
+  </section>
+
+  <div id="toast"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
